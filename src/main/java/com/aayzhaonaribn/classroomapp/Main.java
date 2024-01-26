@@ -1,20 +1,22 @@
 package com.aayzhaonaribn.classroomapp;
 import com.aayzhaonaribn.parsing.PDFToText;
 import com.aayzhaonaribn.parsing.ResourceLoader;
+import com.aayzhaonaribn.parsing.TextParse;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
+import java.util.HashSet;
 
 public class Main {
     static final String INPUT_PATH = "spring2024.pdf";
     static final String OUTPUT_PATH = "pdf.txt";
     static final boolean DEBUG_MODE = true;
+    public static final HashSet<Integer> courseNumbers = new HashSet<>();
+    public static final HashSet<Integer> classCodes = new HashSet<>();
 
     public static void main(String[] args) {
         ResourceLoader loader = new ResourceLoader(); // initialize resource loader
@@ -23,49 +25,22 @@ public class Main {
         // Startup operations
         // Load data from PDF
         // generates a text file with all the pdf text contained within
-        loadPDFToText(loader);
+        //loadPDFToText(loader);
 
         // open a scanner for the newly made .txt file
-        File textFile = null;
-        try {
-            textFile = loader.getFileFromResource(OUTPUT_PATH);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            if (DEBUG_MODE) System.out.println("Error reading generated text file");
-        }
-        assert textFile != null;
-
-        Scanner scan = null;
-        try {
-            scan = new Scanner(textFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-            if (DEBUG_MODE) System.out.println("Text ver of pdf missing");
-        }
-
+        TextParse parser = new TextParse();
+        parser.parseTextFile(OUTPUT_PATH, loader, DEBUG_MODE);
+        HashSet<Integer> visualizer = courseNumbers;
+        System.out.println(courseNumbers.size());
+        System.out.println(classCodes.size() + " Unique Classes in total");
 
 
     }
 
     private static void loadPDFToText(ResourceLoader loader) {
         PDFToText pdfParser = new PDFToText();
-        File inputFile = null;
-        File outputFile = null;
-        try {
-            outputFile = loader.getFileFromResource(OUTPUT_PATH);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            System.out.println("URI syntax error");
-        }
-
-        try {
-            inputFile = loader.getFileFromResource(INPUT_PATH);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            if (DEBUG_MODE) System.out.println("URI syntax error");
-        }
-
-        assert outputFile != null;
+        File inputFile = loader.loadFileWrapper(INPUT_PATH);
+        File outputFile = loader.loadFileWrapper(OUTPUT_PATH);
         Path path = Paths.get(outputFile.getPath());
         String result = "";
 

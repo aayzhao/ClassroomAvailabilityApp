@@ -20,4 +20,17 @@ public class ResourceLoader {
         }
 
     }
+
+    public File loadFileWrapper(String fileName) { // does the try catch to shorten code overall
+        // wraps the getFileFromResource function
+        File file = null;
+        try {
+            file = this.getFileFromResource(fileName);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.out.println(e.getReason());
+        }
+        assert file != null;
+        return file;
+    }
 }
