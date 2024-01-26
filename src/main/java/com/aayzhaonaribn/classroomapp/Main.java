@@ -25,13 +25,14 @@ public class Main {
         // Startup operations
         // Load data from PDF
         // generates a text file with all the pdf text contained within
-        //loadPDFToText(loader);
+        loadPDFToText(loader);
 
         // open a scanner for the newly made .txt file
         TextParse parser = new TextParse();
         parser.parseTextFile(OUTPUT_PATH, loader, DEBUG_MODE);
         HashSet<Integer> visualizer = courseNumbers;
-        System.out.println(courseNumbers.size());
+        HashSet<Integer> visualizer2 = classCodes;
+        System.out.println(courseNumbers.size() + " Class types");
         System.out.println(classCodes.size() + " Unique Classes in total");
 
 

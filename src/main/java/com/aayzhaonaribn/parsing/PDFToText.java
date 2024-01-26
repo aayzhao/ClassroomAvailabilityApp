@@ -5,8 +5,6 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public class PDFToText {
     public String parse(File pdfFile) throws IOException {

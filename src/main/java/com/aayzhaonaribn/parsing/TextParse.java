@@ -22,9 +22,9 @@ public class TextParse {
             if (scan.hasNext(majorCode)) {
                 token = scan.next();
                 if (scan.hasNext(classNum)) {
-                    System.out.println("" + token);
-                    Main.courseNumbers.add(Integer.parseInt(scan.next()));
-                    scan.next();
+                    int num = Integer.parseInt(scan.next());
+                    Main.courseNumbers.add(num);
+                    System.out.println("" + token + " " + num  + " " + scan.next());
                     Main.classCodes.add(Integer.parseInt(scan.next()));
                 }
                 this.endSection(scan, endOfSection);
