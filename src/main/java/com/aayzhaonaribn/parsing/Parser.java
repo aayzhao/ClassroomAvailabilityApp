@@ -32,7 +32,7 @@ public class Parser {
         return text.getText(doc);
     }
 
-    private File getFileFromResource(String fileName) throws URISyntaxException {
+    public File getFileFromResource(String fileName) throws URISyntaxException {
 
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
