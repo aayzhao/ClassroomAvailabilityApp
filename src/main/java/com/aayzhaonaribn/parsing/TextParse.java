@@ -30,8 +30,8 @@ public class TextParse {
         // regex patterns
         Pattern majorCodePattern = Pattern.compile("[A-Z][A-Z][A-Z][A-Z]|[A-Z][A-Z][A-Z]");
         Pattern endOfSectionPattern = Pattern.compile("__.*");
-        Pattern classNumPattern = Pattern.compile("[0-9]*");
-        Pattern roomPattern = Pattern.compile(".*Room:|.*R[a-z]oom:"); // some room identifier tokens are  corrupted, misspelled
+        Pattern classNumPattern = Pattern.compile("[0-9]*H?"); // some classes are honors classes, thus an H can be at the end
+        Pattern roomPattern = Pattern.compile(".*Room:|.*R[a-zA-Z]oom:|oom:"); // some room identifier tokens are  corrupted, misspelled
         Pattern buildingPattern = Pattern.compile("Bldg:");
         Pattern daysPattern = Pattern.compile("Days:");
         // end regex patterns
@@ -44,24 +44,25 @@ public class TextParse {
             if (scan.hasNext(majorCodePattern)) {
                 token = scan.next();
                 if (scan.hasNext(classNumPattern)) {
-                    int num = Integer.parseInt(scan.next());
-                    // Main.courseNumbers.add(num);
+                    String classNum = scan.next();
 
-                    courseCode = "" + token + " " + num + " " + scan.next();
+                    courseCode = "" + token + " " + classNum + " " + scan.next();
                     if (DEBUG_MODE) System.out.println(courseCode); // debug info
 
                     courseNumber = Integer.parseInt(scan.next());
                     if (!Main.classCodes.add(courseNumber)) throw new IllegalArgumentException("Repeat class identifier found!");
                     if (DEBUG_MODE) System.out.println(courseNumber);
 
-                    while (scan.hasNext() && !scan.hasNext(buildingPattern)) {
+                    while (scan.hasNext() && !scan.hasNext(buildingPattern) && !scan.hasNext(endOfSectionPattern)) {
                         scan.next(); // parse to the "bldg:" pattern
                     }
+                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Reached end of section before parsing required information");
                     scan.next(); // parse past the "Bldg:" pattern
 
-                    while (scan.hasNext() && !scan.hasNext(roomPattern)) {
+                    while (scan.hasNext() && !scan.hasNext(roomPattern) && !scan.hasNext(endOfSectionPattern)) {
                         sb.append(scan.next()); // parse building name
                     }
+                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Reached end of section before parsing required information");
                     building = sb.toString();
                     scan.next(); // parse past the room pattern
                     room = scan.next(); // parse room code

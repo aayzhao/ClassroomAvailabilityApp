@@ -20,7 +20,7 @@ public class Main {
     static final String INPUT_PATH = "spring2024.pdf";
     static final String OUTPUT_PATH = "pdf.txt";
     static final boolean DEBUG_MODE = true;
-    public static final HashSet<Integer> courseNumbers = new HashSet<>();
+    // public static final HashSet<Integer> courseNumbers = new HashSet<>();
     public static final HashSet<Integer> classCodes = new HashSet<>();
 
     public static void main(String[] args) {
@@ -37,9 +37,9 @@ public class Main {
         // open a scanner for the newly made .txt file
         TextParse parser = new TextParse();
         List<Course> listOfCourses = parser.parseTextFile(OUTPUT_PATH, loader, DEBUG_MODE); // generate list of classes
-        HashSet<Integer> visualizer = courseNumbers;
+        // HashSet<Integer> visualizer = courseNumbers;
         HashSet<Integer> visualizer2 = classCodes;
-        System.out.println(courseNumbers.size() + " Class types");
+        // System.out.println(courseNumbers.size() + " Class types");
         System.out.println(classCodes.size() + " Unique Classes in total");
 
 
