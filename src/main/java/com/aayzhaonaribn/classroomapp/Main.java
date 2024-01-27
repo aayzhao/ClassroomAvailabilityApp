@@ -1,25 +1,32 @@
 package com.aayzhaonaribn.classroomapp;
+import classes.ClassroomScheduleManager;
+import classes.Course;
 import com.aayzhaonaribn.parsing.PDFToText;
 import com.aayzhaonaribn.parsing.ResourceLoader;
 import com.aayzhaonaribn.parsing.TextParse;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Main {
     static final String INPUT_PATH = "spring2024.pdf";
     static final String OUTPUT_PATH = "pdf.txt";
     static final boolean DEBUG_MODE = true;
-    public static final HashSet<Integer> courseNumbers = new HashSet<>();
+    // public static final HashSet<Integer> courseNumbers = new HashSet<>();
     public static final HashSet<Integer> classCodes = new HashSet<>();
 
     public static void main(String[] args) {
+        // startup and initialize classes
         ResourceLoader loader = new ResourceLoader(); // initialize resource loader
+        ClassroomScheduleManager manager;
         //System.out.println("Hello world"); // because why not
 
         // Startup operations
@@ -29,11 +36,19 @@ public class Main {
 
         // open a scanner for the newly made .txt file
         TextParse parser = new TextParse();
-        parser.parseTextFile(OUTPUT_PATH, loader, DEBUG_MODE);
-        HashSet<Integer> visualizer = courseNumbers;
+        List<Course> listOfCourses = parser.parseTextFile(OUTPUT_PATH, loader, DEBUG_MODE); // generate list of classes
+        // HashSet<Integer> visualizer = courseNumbers;
         HashSet<Integer> visualizer2 = classCodes;
-        System.out.println(courseNumbers.size() + " Class types");
+        // System.out.println(courseNumbers.size() + " Class types");
         System.out.println(classCodes.size() + " Unique Classes in total");
+
+        HashSet<String> buildings = new HashSet<>();
+        for (Course course : listOfCourses) {
+            buildings.add(course.getBuilding());
+            System.out.println(course.getBuilding());
+        }
+        System.out.println("Buildings count: " + buildings.size());
+        for (String building : buildings) System.out.println(building);
 
 
     }
