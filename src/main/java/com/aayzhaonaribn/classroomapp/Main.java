@@ -42,6 +42,14 @@ public class Main {
         // System.out.println(courseNumbers.size() + " Class types");
         System.out.println(classCodes.size() + " Unique Classes in total");
 
+        HashSet<String> buildings = new HashSet<>();
+        for (Course course : listOfCourses) {
+            buildings.add(course.getBuilding());
+            System.out.println(course.getBuilding());
+        }
+        System.out.println("Buildings count: " + buildings.size());
+        for (String building : buildings) System.out.println(building);
+
 
     }
 

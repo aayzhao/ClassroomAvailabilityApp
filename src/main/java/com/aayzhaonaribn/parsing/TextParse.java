@@ -38,12 +38,13 @@ public class TextParse {
 
         System.out.println(scan.nextLine());
         String token, courseCode, building, room, days;
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb;
         int courseNumber;
         while (scan.hasNext()) {
             if (scan.hasNext(majorCodePattern)) {
                 token = scan.next();
                 if (scan.hasNext(classNumPattern)) {
+                    sb = new StringBuilder();
                     String classNum = scan.next();
 
                     courseCode = "" + token + " " + classNum + " " + scan.next();
@@ -61,9 +62,11 @@ public class TextParse {
 
                     while (scan.hasNext() && !scan.hasNext(roomPattern) && !scan.hasNext(endOfSectionPattern)) {
                         sb.append(scan.next()); // parse building name
+                        if (!scan.hasNext(endOfSectionPattern) && !scan.hasNext(roomPattern)) sb.append(" ");
                     }
                     if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Reached end of section before parsing required information");
                     building = sb.toString();
+                    if (DEBUG_MODE) System.out.println(building);
                     scan.next(); // parse past the room pattern
                     room = scan.next(); // parse room code
 
@@ -87,7 +90,7 @@ public class TextParse {
         }
 
         scan.close();
-        return new ArrayList<>();
+        return courses;
     }
 
     /**
