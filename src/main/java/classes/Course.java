@@ -11,9 +11,9 @@ public class Course {
 
     /**
      * Constructor that does not require a timeslot list, and instead a course identifier number
-     * @param _courseCode
-     * @param _building
-     * @param _room
+     * @param _courseCode   Course code composed of course major code and class + section number
+     * @param _building     Building name
+     * @param _room         Room number
      * @param _courseNumber Unique identifier for the course
      */
     public Course(String _courseCode, String _building, String _room, int _courseNumber) {
