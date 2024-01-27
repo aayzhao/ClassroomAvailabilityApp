@@ -6,6 +6,9 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import com.aayzhaonaribn.classroomapp.Main;
 
+/**
+ * Encapsulates methods for parsing .txt files
+ */
 public class TextParse {
     public void parseTextFile(String filePath, ResourceLoader loader, boolean DEBUG_MODE) {
         File textFile = loader.loadFileWrapper(filePath);
@@ -37,12 +40,23 @@ public class TextParse {
         scan.close();
     }
 
+    /**
+     * Navigates the given Scanner object to the end of section token
+     * @param scan          Scanner object to manipulate
+     * @param endOfSection  regex pattern for the end of section
+     */
     private void endSection(Scanner scan, Pattern endOfSection) {
         while (scan.hasNext() && !scan.hasNext(endOfSection)) {
             scan.next();
         }
     }
 
+    /**
+     * Initializes a scanner for a given .txt file
+     * @param textFile      File object wrapper for a .txt file
+     * @param DEBUG_MODE    If true, prints out extra information to console
+     * @return              Scanner object that reads the given .txt file. Must be closed later
+     */
     private Scanner initScanner(File textFile, boolean DEBUG_MODE) {
         Scanner initialized = null;
         try {
