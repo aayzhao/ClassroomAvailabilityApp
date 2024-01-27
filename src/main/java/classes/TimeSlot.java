@@ -12,4 +12,16 @@ public class TimeSlot {
         this.startTime = _startTime;
         this.endTime = _endTime;
     }
+
+    public String getDays() {
+        return days;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
 }
