@@ -23,29 +23,67 @@ public class TextParse {
      */
     public List<Course> parseTextFile(String filePath, ResourceLoader loader, boolean DEBUG_MODE) {
         File textFile = loader.loadFileWrapper(filePath);
+        List<Course> courses = new ArrayList<>();
 
         Scanner scan = initScanner(textFile, DEBUG_MODE);
-        Pattern majorCode = Pattern.compile("[A-Z][A-Z][A-Z][A-Z]|[A-Z][A-Z][A-Z]");
-        Pattern endOfSection = Pattern.compile("__.*");
-        Pattern classNum = Pattern.compile("[0-9]*");
-        System.out.println(scan.nextLine());
-        String token;
 
+        // regex patterns
+        Pattern majorCodePattern = Pattern.compile("[A-Z][A-Z][A-Z][A-Z]|[A-Z][A-Z][A-Z]");
+        Pattern endOfSectionPattern = Pattern.compile("__.*");
+        Pattern classNumPattern = Pattern.compile("[0-9]*");
+        Pattern roomPattern = Pattern.compile(".*Room:|.*R[a-z]oom:"); // some room identifier tokens are  corrupted, misspelled
+        Pattern buildingPattern = Pattern.compile("Bldg:");
+        Pattern daysPattern = Pattern.compile("Days:");
+        // end regex patterns
+
+        System.out.println(scan.nextLine());
+        String token, courseCode, building, room, days;
+        StringBuilder sb = new StringBuilder();
+        int courseNumber;
         while (scan.hasNext()) {
-            if (scan.hasNext(majorCode)) {
+            if (scan.hasNext(majorCodePattern)) {
                 token = scan.next();
-                if (scan.hasNext(classNum)) {
+                if (scan.hasNext(classNumPattern)) {
                     int num = Integer.parseInt(scan.next());
-                    Main.courseNumbers.add(num);
-                    System.out.println("" + token + " " + num  + " " + scan.next());
-                    Main.classCodes.add(Integer.parseInt(scan.next()));
+                    // Main.courseNumbers.add(num);
+
+                    courseCode = "" + token + " " + num + " " + scan.next();
+                    if (DEBUG_MODE) System.out.println(courseCode); // debug info
+
+                    courseNumber = Integer.parseInt(scan.next());
+                    if (!Main.classCodes.add(courseNumber)) throw new IllegalArgumentException("Repeat class identifier found!");
+                    if (DEBUG_MODE) System.out.println(courseNumber);
+
+                    while (scan.hasNext() && !scan.hasNext(buildingPattern)) {
+                        scan.next(); // parse to the "bldg:" pattern
+                    }
+                    scan.next(); // parse past the "Bldg:" pattern
+
+                    while (scan.hasNext() && !scan.hasNext(roomPattern)) {
+                        sb.append(scan.next()); // parse building name
+                    }
+                    building = sb.toString();
+                    scan.next(); // parse past the room pattern
+                    room = scan.next(); // parse room code
+
+//                    while (scan.hasNext() && !scan.hasNext(daysPattern)) {
+//                        scan.next(); // parse to the "Days:" pattern
+//                    }
+//                    scan.next(); // parse past the "Days:" pattern
+//                    days = scan.next();
+
+                    courses.add(new Course(courseCode, building, room, courseNumber));
+
                 }
-                this.endSection(scan, endOfSection);
+                this.endSection(scan, endOfSectionPattern); // move to end of this class section
             } else {
                 scan.next();
             }
         }
-        System.out.println("No more matches");
+        if (DEBUG_MODE) {
+            System.out.println("No more matches");
+            System.out.println(courses.size());
+        }
 
         scan.close();
         return new ArrayList<>();
