@@ -2,15 +2,26 @@ package com.aayzhaonaribn.parsing;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import classes.Course;
 import com.aayzhaonaribn.classroomapp.Main;
 
 /**
  * Encapsulates methods for parsing .txt files
  */
 public class TextParse {
-    public void parseTextFile(String filePath, ResourceLoader loader, boolean DEBUG_MODE) {
+    /**
+     * Parse the given text file and extract class information
+     * @param filePath      relative path to .txt file
+     * @param loader        resource loader object
+     * @param DEBUG_MODE    if true, print out extra information to console
+     * @return              returns a list of course objects
+     */
+    public List<Course> parseTextFile(String filePath, ResourceLoader loader, boolean DEBUG_MODE) {
         File textFile = loader.loadFileWrapper(filePath);
 
         Scanner scan = initScanner(textFile, DEBUG_MODE);
@@ -21,7 +32,6 @@ public class TextParse {
         String token;
 
         while (scan.hasNext()) {
-
             if (scan.hasNext(majorCode)) {
                 token = scan.next();
                 if (scan.hasNext(classNum)) {
@@ -38,6 +48,7 @@ public class TextParse {
         System.out.println("No more matches");
 
         scan.close();
+        return new ArrayList<>();
     }
 
     /**
