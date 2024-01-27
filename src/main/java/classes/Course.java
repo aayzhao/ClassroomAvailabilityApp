@@ -14,4 +14,20 @@ public class Course {
         this.room = _room;
         this.timeSlots = _timeSlots;
     }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public List<TimeSlot> getTimeSlot(){
+        return timeSlots;
+    }
 }
