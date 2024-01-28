@@ -1,6 +1,5 @@
 package project.classavailability.classes;
 
-import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;

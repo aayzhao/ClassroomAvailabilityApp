@@ -2,13 +2,11 @@ package project.classavailability.parsing;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
 import project.classavailability.classes.Course;
 import project.classavailability.classes.TimeSlot;
 import project.classavailability.classroomapp.Main;
