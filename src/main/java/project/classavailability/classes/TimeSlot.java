@@ -1,4 +1,4 @@
-package classes;
+package project.classavailability.classes;
 
 import java.time.LocalTime;
 
