@@ -12,7 +12,7 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         this.courses = courses;
     }
 
-
+    // TODO: implementation needed
     @Override
     public List<String> findFreeRooms(String building, DayOfWeek day, LocalTime time) {
         List<String> freeRooms = new ArrayList<>();
@@ -26,6 +26,7 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         return freeRooms;
     }
 
+    // TODO: testing needed
     private boolean isRoomOccupied(Course course, DayOfWeek day, LocalTime time) {
         String dayAbbreviation = getDayAbbreviation(day);
 
@@ -38,18 +39,7 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         return false;
     }
 
-    private String getDayAbbreviation(DayOfWeek day) {
-        switch (day) {
-            case MONDAY: return "M";
-            case TUESDAY: return "Tu";
-            case WEDNESDAY: return "W";
-            case THURSDAY: return "Th";
-            case FRIDAY: return "F";
-            default: return ""; // Handle other days if necessary
-        }
-    }
-
-
+    // TODO: testing
     @Override
     public List<Course> getScheduleForRoom(String building, String room) {
         List<Course> schedule = new ArrayList<>();
@@ -63,6 +53,7 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         return schedule;
     }
 
+    // TODO: testing
     @Override
     public List<Course> getCoursesInBuilding(String building) {
         List<Course> coursesInBuilding = new ArrayList<>();
