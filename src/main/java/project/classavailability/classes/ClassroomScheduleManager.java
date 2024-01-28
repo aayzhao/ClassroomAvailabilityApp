@@ -28,7 +28,7 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
 
     // TODO: testing needed
     private boolean isRoomOccupied(Course course, DayOfWeek day, LocalTime time) {
-        String dayAbbreviation = getDayAbbreviation(day);
+        String dayAbbreviation = TimeSlot.getDayStringFromEnum(day);
 
         for (TimeSlot slot : course.getTimeSlot()) {
             if (slot.getDays().contains(dayAbbreviation) &&

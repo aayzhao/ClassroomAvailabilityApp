@@ -37,7 +37,7 @@ public class TimeSlot {
     }
 
 
-    private static String getDayStringFromEnum(DayOfWeek day) {
+    public static String getDayStringFromEnum(DayOfWeek day) {
         switch (day) {
             case SUNDAY: return "Su";
             case MONDAY: return "M";
@@ -50,7 +50,7 @@ public class TimeSlot {
         }
     }
 
-    private static DayOfWeek getEnumFromDayString(String day) {
+    public static DayOfWeek getEnumFromDayString(String day) {
         switch (day) {
             case "Su": return DayOfWeek.SUNDAY;
             case "M": return DayOfWeek.MONDAY;
