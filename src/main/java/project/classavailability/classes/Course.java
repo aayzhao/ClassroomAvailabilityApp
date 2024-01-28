@@ -7,10 +7,26 @@ public class Course {
     private String building;
     private String room;
     private int courseNumber; // unique course identifier number
-    private List<TimeSlot> timeSlots;
+    private TimeSlot timeSlot;
 
     /**
-     * Constructor that does not require a timeslot list, and instead a course identifier number
+     * Constructor requiring all private field arguments
+     * @param _courseCode   Course code composed of course major code and class + section number
+     * @param _building     Building name
+     * @param _room         Room number
+     * @param _courseNumber Unique identifier for the course
+     * @param timeSlot      TimeSlot object representing date, time together
+     */
+    public Course(String _courseCode, String _building, String _room, int _courseNumber, TimeSlot timeSlot) {
+        this.courseCode = _courseCode;
+        this.building = _building;
+        this.room = _room;
+        this.timeSlot = timeSlot;
+        this.courseNumber = _courseNumber;
+    }
+
+    /**
+     * Constructor that does not require a timeslot, and instead a course identifier number
      * @param _courseCode   Course code composed of course major code and class + section number
      * @param _building     Building name
      * @param _room         Room number
@@ -20,15 +36,15 @@ public class Course {
         this.courseCode = _courseCode;
         this.building = _building;
         this.room = _room;
-        this.timeSlots = new ArrayList<>();
+        this.timeSlot = null;
         this.courseNumber = _courseNumber;
     }
 
-    public Course(String _courseCode, String _building, String _room, List<TimeSlot> _timeSlots) {
+    public Course(String _courseCode, String _building, String _room, TimeSlot _timeSlots) {
         this.courseCode = _courseCode;
         this.building = _building;
         this.room = _room;
-        this.timeSlots = _timeSlots;
+        this.timeSlot = _timeSlots;
     }
 
     public String getCourseCode() {
@@ -43,13 +59,19 @@ public class Course {
         return room;
     }
 
-    public List<TimeSlot> getTimeSlot(){
-        return timeSlots;
+    /**
+     * Returns the TimeSlot object associated with this class.
+     * If any fields about the class are TBA then it will return a null value
+     * @return  TimeSlot object of this course
+     */
+    public TimeSlot getTimeSlot(){
+        return timeSlot;
     }
 
     @Override
     public boolean equals(Object other) {
         if (other == null) throw new IllegalArgumentException("Object cannot be null");
+        if (!(other instanceof Course)) return false;
         return this.toString().equals(other.toString());
     }
 

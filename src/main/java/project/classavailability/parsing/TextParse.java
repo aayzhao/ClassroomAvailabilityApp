@@ -2,12 +2,15 @@ package project.classavailability.parsing;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import project.classavailability.classes.Course;
+import project.classavailability.classes.TimeSlot;
 import project.classavailability.classroomapp.Main;
 
 /**
@@ -34,21 +37,33 @@ public class TextParse {
         Pattern roomPattern = Pattern.compile(".*Room:|.*R[a-zA-Z]oom:|oom:"); // some room identifier tokens are  corrupted, misspelled
         Pattern buildingPattern = Pattern.compile("Bldg:");
         Pattern daysPattern = Pattern.compile("Days:");
+        Pattern timePattern = Pattern.compile("Time:");
+        Pattern tbaSymbolPattern = Pattern.compile("TBA");
         // end regex patterns
 
         System.out.println(scan.nextLine());
         String token, courseCode, building, room, days;
+        LocalTime start, end;
+        TimeSlot timeSlot;
         StringBuilder sb;
         int courseNumber;
         while (scan.hasNext()) {
             if (scan.hasNext(majorCodePattern)) {
                 token = scan.next();
-                if (scan.hasNext(classNumPattern)) {
+                if (scan.hasNext(classNumPattern)) { // confirmed that a class has been found
                     sb = new StringBuilder();
-                    String classNum = scan.next();
+                    String classNum = scan.next(); // parse class  number
 
-                    courseCode = "" + token + " " + classNum + " " + scan.next();
+                    // build course code
+                    sb.append(token);
+                    sb.append(" ");
+                    sb.append(classNum);
+                    sb.append(" ");
+                    if (!scan.hasNext()) throw new IndexOutOfBoundsException("Error parsing class code");
+                    sb.append(scan.next());
+                    courseCode = sb.toString();
                     if (DEBUG_MODE) System.out.println(courseCode); // debug info
+                    sb = new StringBuilder(); // clear the stringbuilder
 
                     courseNumber = Integer.parseInt(scan.next());
                     if (!Main.classCodes.add(courseNumber)) throw new IllegalArgumentException("Repeat class identifier found!");
@@ -57,26 +72,39 @@ public class TextParse {
                     while (scan.hasNext() && !scan.hasNext(buildingPattern) && !scan.hasNext(endOfSectionPattern)) {
                         scan.next(); // parse to the "bldg:" pattern
                     }
-                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Reached end of section before parsing required information");
+                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Error parsing building information");
                     scan.next(); // parse past the "Bldg:" pattern
 
                     while (scan.hasNext() && !scan.hasNext(roomPattern) && !scan.hasNext(endOfSectionPattern)) {
                         sb.append(scan.next()); // parse building name
                         if (!scan.hasNext(endOfSectionPattern) && !scan.hasNext(roomPattern)) sb.append(" ");
                     }
-                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Reached end of section before parsing required information");
+                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Error parsing building information");
                     building = sb.toString();
                     if (DEBUG_MODE) System.out.println(building);
-                    scan.next(); // parse past the room pattern
+
+                    if (scan.hasNext() && scan.hasNext(roomPattern)) scan.next(); // parse past the room pattern
+                    else throw new IndexOutOfBoundsException("Error parsing room information");
                     room = scan.next(); // parse room code
 
-//                    while (scan.hasNext() && !scan.hasNext(daysPattern)) {
-//                        scan.next(); // parse to the "Days:" pattern
-//                    }
-//                    scan.next(); // parse past the "Days:" pattern
-//                    days = scan.next();
+                    if (scan.hasNext() && scan.hasNext(daysPattern)) scan.next(); // parse past days pattern
+                    else throw new IndexOutOfBoundsException("Error parsing days information");
+                    days = scan.next(); // parse days
 
-                    courses.add(new Course(courseCode, building, room, courseNumber));
+                    if (scan.hasNext() && scan.hasNext(timePattern)) scan.next(); // parse past time pattern
+                    else throw new IndexOutOfBoundsException("Error parsing time information");
+                    if (scan.hasNext() && scan.hasNext(tbaSymbolPattern)) courses.add(new Course(courseCode, building, room, courseNumber));
+                    else {
+                        if (scan.hasNext()) start = LocalTime.parse(scan.next());
+                        else throw new IndexOutOfBoundsException("Failed to parse time information");
+                        if (scan.hasNext("-")) scan.next(); // parse past the dash
+                        else throw new IndexOutOfBoundsException("Failed to parse second piece of time information");
+                        if (scan.hasNext()) end = LocalTime.parse(scan.next());
+                        else throw new IndexOutOfBoundsException("Failed to parse second piece of time information");
+
+                        timeSlot = new TimeSlot(days, start, end);
+                        courses.add(new Course(courseCode, building, room, courseNumber, timeSlot));
+                    }
 
                 }
                 this.endSection(scan, endOfSectionPattern); // move to end of this class section
