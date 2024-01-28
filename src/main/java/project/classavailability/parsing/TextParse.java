@@ -50,12 +50,20 @@ public class TextParse {
         while (scan.hasNext()) {
             if (scan.hasNext(majorCodePattern)) {
                 token = scan.next();
-                if (scan.hasNext(classNumPattern)) {
+                if (scan.hasNext(classNumPattern)) { // confirmed that a class has been found
                     sb = new StringBuilder();
-                    String classNum = scan.next();
+                    String classNum = scan.next(); // parse class  number
 
-                    courseCode = "" + token + " " + classNum + " " + scan.next();
+                    // build course code
+                    sb.append(token);
+                    sb.append(" ");
+                    sb.append(classNum);
+                    sb.append(" ");
+                    if (!scan.hasNext()) throw new IndexOutOfBoundsException("Error parsing class code");
+                    sb.append(scan.next());
+                    courseCode = sb.toString();
                     if (DEBUG_MODE) System.out.println(courseCode); // debug info
+                    sb = new StringBuilder(); // clear the stringbuilder
 
                     courseNumber = Integer.parseInt(scan.next());
                     if (!Main.classCodes.add(courseNumber)) throw new IllegalArgumentException("Repeat class identifier found!");
