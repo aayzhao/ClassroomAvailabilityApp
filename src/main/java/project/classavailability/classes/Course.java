@@ -1,6 +1,5 @@
 package project.classavailability.classes;
 
-import java.util.*;
 
 public class Course {
     private String courseCode; // String containing the course major code, class code, and section concatenated

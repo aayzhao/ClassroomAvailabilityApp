@@ -4,7 +4,6 @@ import project.classavailability.classes.Course;
 import project.classavailability.parsing.PDFToText;
 import project.classavailability.parsing.ResourceLoader;
 import project.classavailability.parsing.TextParse;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
