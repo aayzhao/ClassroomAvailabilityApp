@@ -9,7 +9,6 @@ public class Course {
     private int courseNumber; // unique course identifier number
     private TimeSlot timeSlot;
 
-    // TODO: implement
     /**
      * Constructor requiring all private field arguments
      * @param _courseCode   Course code composed of course major code and class + section number
@@ -60,6 +59,11 @@ public class Course {
         return room;
     }
 
+    /**
+     * Returns the TimeSlot object associated with this class.
+     * If any fields about the class are TBA then it will return a null value
+     * @return  TimeSlot object of this course
+     */
     public TimeSlot getTimeSlot(){
         return timeSlot;
     }

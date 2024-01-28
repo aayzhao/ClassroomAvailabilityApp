@@ -26,9 +26,9 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         return freeRooms;
     }
 
-    // TODO: reimplementation with new timeslot class needed
+    // TODO: testing needed
     private boolean isRoomOccupied(Course course, DayOfWeek day, LocalTime time) {
-        String dayAbbreviation = TimeSlot.getDayStringFromEnum(day);
+        //String dayAbbreviation = TimeSlot.getDayStringFromEnum(day);
 
         //for (TimeSlot slot : course.getTimeSlot()) {
         //    if (slot.getDays().contains(dayAbbreviation) &&
@@ -36,6 +36,14 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         //        return true;
         //    }
         //}
+        //return false;
+
+        if (course.getTimeSlot() == null) return false;
+        for (DayOfWeek dayEnum : course.getTimeSlot().getDaysEnum()) {
+            if (day == dayEnum) {
+                if (!time.isBefore(course.getTimeSlot().getStartTime()) && !time.isAfter(course.getTimeSlot().getEndTime())) return true;
+            }
+        }
         return false;
     }
 
