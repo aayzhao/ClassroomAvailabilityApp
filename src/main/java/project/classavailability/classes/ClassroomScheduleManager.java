@@ -26,16 +26,16 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         return freeRooms;
     }
 
-    // TODO: testing needed
+    // TODO: reimplementation with new timeslot class needed
     private boolean isRoomOccupied(Course course, DayOfWeek day, LocalTime time) {
         String dayAbbreviation = TimeSlot.getDayStringFromEnum(day);
 
-        for (TimeSlot slot : course.getTimeSlot()) {
-            if (slot.getDays().contains(dayAbbreviation) &&
-                    !time.isBefore(slot.getStartTime()) && !time.isAfter(slot.getEndTime())) {
-                return true;
-            }
-        }
+        //for (TimeSlot slot : course.getTimeSlot()) {
+        //    if (slot.getDays().contains(dayAbbreviation) &&
+        //            !time.isBefore(slot.getStartTime()) && !time.isAfter(slot.getEndTime())) {
+        //        return true;
+        //    }
+        //}
         return false;
     }
 
@@ -67,19 +67,19 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         return coursesInBuilding;
     }
 
-
+    // TODO: reimplement to work with new time slot class
     @Override
     public List<Course> findCoursesByTimeSlot(DayOfWeek day, LocalTime startTime, LocalTime endTime) {
         List<Course> coursesAtTime = new ArrayList<>();
 
-        for (Course course : courses) {
-            for (TimeSlot slot : course.getTimeSlot()) {
-                if (slot.getDays().contains(day.toString().substring(0, 2)) &&
-                        startTime.equals(slot.getStartTime()) && endTime.equals(slot.getEndTime())) {
-                    coursesAtTime.add(course);
-                }
-            }
-        }
+        //for (Course course : courses) {
+        //    for (TimeSlot slot : course.getTimeSlot()) {
+        //        if (slot.getDays().contains(day.toString().substring(0, 2)) &&
+        //                startTime.equals(slot.getStartTime()) && endTime.equals(slot.getEndTime())) {
+        //            coursesAtTime.add(course);
+        //        }
+        //    }
+        //}
 
         return coursesAtTime;
     }

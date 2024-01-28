@@ -2,6 +2,7 @@ package project.classavailability.parsing;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,10 +35,13 @@ public class TextParse {
         Pattern roomPattern = Pattern.compile(".*Room:|.*R[a-zA-Z]oom:|oom:"); // some room identifier tokens are  corrupted, misspelled
         Pattern buildingPattern = Pattern.compile("Bldg:");
         Pattern daysPattern = Pattern.compile("Days:");
+        Pattern timePattern = Pattern.compile("Time:");
+        Pattern tbaSymbolPattern = Pattern.compile("TBA");
         // end regex patterns
 
         System.out.println(scan.nextLine());
         String token, courseCode, building, room, days;
+        LocalTime start, end;
         StringBuilder sb;
         int courseNumber;
         while (scan.hasNext()) {
@@ -57,18 +61,28 @@ public class TextParse {
                     while (scan.hasNext() && !scan.hasNext(buildingPattern) && !scan.hasNext(endOfSectionPattern)) {
                         scan.next(); // parse to the "bldg:" pattern
                     }
-                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Reached end of section before parsing required information");
+                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Error parsing building information");
                     scan.next(); // parse past the "Bldg:" pattern
 
                     while (scan.hasNext() && !scan.hasNext(roomPattern) && !scan.hasNext(endOfSectionPattern)) {
                         sb.append(scan.next()); // parse building name
                         if (!scan.hasNext(endOfSectionPattern) && !scan.hasNext(roomPattern)) sb.append(" ");
                     }
-                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Reached end of section before parsing required information");
+                    if (scan.hasNext(endOfSectionPattern)) throw new IndexOutOfBoundsException("Error parsing building information");
                     building = sb.toString();
                     if (DEBUG_MODE) System.out.println(building);
-                    scan.next(); // parse past the room pattern
+
+                    if (scan.hasNext() && scan.hasNext(roomPattern)) scan.next(); // parse past the room pattern
+                    else throw new IndexOutOfBoundsException("Error parsing room information");
                     room = scan.next(); // parse room code
+
+                    if (scan.hasNext() && scan.hasNext(daysPattern)) scan.next(); // parse past days pattern
+                    else throw new IndexOutOfBoundsException("Error parsing days information");
+                    days = scan.next(); // parse days
+
+                    if (scan.hasNext() && scan.hasNext(timePattern)) scan.next(); // parse past time pattern
+                    else throw new IndexOutOfBoundsException("Error parsing time information");
+                    if (scan.hasNext() && scan.hasNext(tbaSymbolPattern))
 
 //                    while (scan.hasNext() && !scan.hasNext(daysPattern)) {
 //                        scan.next(); // parse to the "Days:" pattern
