@@ -1,4 +1,4 @@
-package com.aayzhaonaribn.parsing;
+package project.classavailability.parsing;
 import org.apache.pdfbox.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;

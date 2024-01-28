@@ -1,4 +1,4 @@
-package com.aayzhaonaribn.parsing;
+package project.classavailability.parsing;
 
 import java.io.File;
 import java.net.URISyntaxException;

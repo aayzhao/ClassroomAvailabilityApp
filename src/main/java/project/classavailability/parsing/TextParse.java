@@ -1,4 +1,4 @@
-package com.aayzhaonaribn.parsing;
+package project.classavailability.parsing;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import classes.Course;
-import com.aayzhaonaribn.classroomapp.Main;
+import project.classavailability.classes.Course;
+import project.classavailability.classroomapp.Main;
 
 /**
  * Encapsulates methods for parsing .txt files

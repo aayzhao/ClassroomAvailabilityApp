@@ -1,18 +1,16 @@
-package com.aayzhaonaribn.classroomapp;
-import classes.ClassroomScheduleManager;
-import classes.Course;
-import com.aayzhaonaribn.parsing.PDFToText;
-import com.aayzhaonaribn.parsing.ResourceLoader;
-import com.aayzhaonaribn.parsing.TextParse;
+package project.classavailability.classroomapp;
+import project.classavailability.classes.ClassroomScheduleManager;
+import project.classavailability.classes.Course;
+import project.classavailability.parsing.PDFToText;
+import project.classavailability.parsing.ResourceLoader;
+import project.classavailability.parsing.TextParse;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
