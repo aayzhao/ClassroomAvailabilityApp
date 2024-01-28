@@ -2,6 +2,7 @@ package project.classavailability.parsing;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import project.classavailability.classes.Course;
+import project.classavailability.classes.TimeSlot;
 import project.classavailability.classroomapp.Main;
 
 /**
@@ -42,6 +44,7 @@ public class TextParse {
         System.out.println(scan.nextLine());
         String token, courseCode, building, room, days;
         LocalTime start, end;
+        TimeSlot timeSlot;
         StringBuilder sb;
         int courseNumber;
         while (scan.hasNext()) {
@@ -82,15 +85,18 @@ public class TextParse {
 
                     if (scan.hasNext() && scan.hasNext(timePattern)) scan.next(); // parse past time pattern
                     else throw new IndexOutOfBoundsException("Error parsing time information");
-                    if (scan.hasNext() && scan.hasNext(tbaSymbolPattern))
+                    if (scan.hasNext() && scan.hasNext(tbaSymbolPattern)) courses.add(new Course(courseCode, building, room, courseNumber));
+                    else {
+                        if (scan.hasNext()) start = LocalTime.parse(scan.next());
+                        else throw new IndexOutOfBoundsException("Failed to parse time information");
+                        if (scan.hasNext("-")) scan.next(); // parse past the dash
+                        else throw new IndexOutOfBoundsException("Failed to parse second piece of time information");
+                        if (scan.hasNext()) end = LocalTime.parse(scan.next());
+                        else throw new IndexOutOfBoundsException("Failed to parse second piece of time information");
 
-//                    while (scan.hasNext() && !scan.hasNext(daysPattern)) {
-//                        scan.next(); // parse to the "Days:" pattern
-//                    }
-//                    scan.next(); // parse past the "Days:" pattern
-//                    days = scan.next();
-
-                    courses.add(new Course(courseCode, building, room, courseNumber));
+                        timeSlot = new TimeSlot(days, start, end);
+                        courses.add(new Course(courseCode, building, room, courseNumber, timeSlot));
+                    }
 
                 }
                 this.endSection(scan, endOfSectionPattern); // move to end of this class section

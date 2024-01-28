@@ -9,18 +9,23 @@ public class Course {
     private int courseNumber; // unique course identifier number
     private TimeSlot timeSlot;
 
+    // TODO: implement
     /**
      * Constructor requiring all private field arguments
-     * @param _courseCode
-     * @param _building
-     * @param _room
-     * @param _courseNumber
-     * @param timeSlot
+     * @param _courseCode   Course code composed of course major code and class + section number
+     * @param _building     Building name
+     * @param _room         Room number
+     * @param _courseNumber Unique identifier for the course
+     * @param timeSlot      TimeSlot object representing date, time together
      */
     public Course(String _courseCode, String _building, String _room, int _courseNumber, TimeSlot timeSlot) {
-
+        this.courseCode = _courseCode;
+        this.building = _building;
+        this.room = _room;
+        this.timeSlot = timeSlot;
+        this.courseNumber = _courseNumber;
     }
-    @Deprecated
+
     /**
      * Constructor that does not require a timeslot, and instead a course identifier number
      * @param _courseCode   Course code composed of course major code and class + section number
