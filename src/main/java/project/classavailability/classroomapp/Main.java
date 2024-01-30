@@ -1,6 +1,7 @@
 package project.classavailability.classroomapp;
 import project.classavailability.classes.ClassroomScheduleManager;
 import project.classavailability.classes.Course;
+import project.classavailability.parsing.ListCleaner;
 import project.classavailability.parsing.PDFToText;
 import project.classavailability.parsing.ResourceLoader;
 import project.classavailability.parsing.TextParse;
@@ -24,6 +25,7 @@ public class Main {
         // startup and initialize classes
         ResourceLoader loader = new ResourceLoader(); // initialize resource loader
         ClassroomScheduleManager manager;
+        ListCleaner cleaner = new ListCleaner();
         //System.out.println("Hello world"); // because why not
 
         // Startup operations
@@ -35,9 +37,9 @@ public class Main {
         TextParse parser = new TextParse();
         List<Course> listOfCourses = parser.parseTextFile(OUTPUT_PATH, loader, DEBUG_MODE); // generate list of classes
         // HashSet<Integer> visualizer = courseNumbers;
-        HashSet<Integer> visualizer2 = classCodes;
+        // HashSet<Integer> visualizer2 = classCodes;
         // System.out.println(courseNumbers.size() + " Class types");
-        System.out.println(classCodes.size() + " Unique Classes in total");
+        // System.out.println(classCodes.size() + " Unique Classes in total");
 
         HashSet<String> buildings = new HashSet<>();
         for (Course course : listOfCourses) {
@@ -47,6 +49,9 @@ public class Main {
         System.out.println("Buildings count: " + buildings.size());
         for (String building : buildings) System.out.println(building);
 
+        System.out.println(listOfCourses.size());
+        cleaner.removeTBA(listOfCourses);
+        System.out.println(listOfCourses.size());
 
     }
 
