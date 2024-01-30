@@ -1,5 +1,7 @@
 package project.classavailability.classes;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +38,22 @@ public class Room {
         this.schedule = schedule;
         this.building = building;
         this.roomNumber = roomNumber;
+    }
+
+    /**
+     * Determines if this room object is occupied at a given day and time.
+     * @param day   Day of the week to check for
+     * @param time  Time of day to check for (24-hour clock)
+     * @return      true if occupied, false otherwise
+     */
+    public boolean isRoomOccupied(DayOfWeek day, LocalTime time) {
+        if  (day == null || time == null) throw new IllegalArgumentException("Arguments cannot be null");
+        for (Course course : schedule) {
+            if (course.getTimeSlot().getDaysEnum().contains(day)) {
+                if (!time.isBefore(course.getTimeSlot().getStartTime()) && !time.isAfter(course.getTimeSlot().getEndTime())) return true;
+            }
+        }
+        return false;
     }
 
     @Override

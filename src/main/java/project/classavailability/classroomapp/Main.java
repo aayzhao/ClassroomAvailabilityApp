@@ -19,7 +19,7 @@ public class Main {
     static final String OUTPUT_PATH = "pdf.txt";
     static final boolean DEBUG_MODE = true;
     // public static final HashSet<Integer> courseNumbers = new HashSet<>();
-    public static final HashSet<Integer> classCodes = new HashSet<>();
+    // public static final HashSet<Integer> classCodes = new HashSet<>();
 
     public static void main(String[] args) {
         // startup and initialize classes
@@ -33,7 +33,7 @@ public class Main {
         // generates a text file with all the pdf text contained within
         loadPDFToText(loader);
 
-        // open a scanner for the newly made .txt file
+        // create parser to parse the pdf.txt file
         TextParse parser = new TextParse();
         List<Course> listOfCourses = parser.parseTextFile(OUTPUT_PATH, loader, DEBUG_MODE); // generate list of classes
         // HashSet<Integer> visualizer = courseNumbers;
@@ -49,6 +49,7 @@ public class Main {
         System.out.println("Buildings count: " + buildings.size());
         for (String building : buildings) System.out.println(building);
 
+        // clean the list of classes
         System.out.println(listOfCourses.size());
         cleaner.removeTBA(listOfCourses);
         System.out.println(listOfCourses.size());

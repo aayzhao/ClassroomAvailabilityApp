@@ -18,7 +18,7 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
         List<String> freeRooms = new ArrayList<>();
 
         for (Course course : courses) {
-            if (course.getBuilding().equals(building) && !isRoomOccupied(course, day, time)) {
+            if (course.getBuilding().equals(building) && !isRoomOccupiedByCourse(course, day, time)) {
 
             }
         }
@@ -27,7 +27,8 @@ public class ClassroomScheduleManager implements ClassroomScheduleInterface {
     }
 
     // TODO: testing needed
-    private boolean isRoomOccupied(Course course, DayOfWeek day, LocalTime time) {
+    @Deprecated // deprecated by Room class implementation
+    private boolean isRoomOccupiedByCourse(Course course, DayOfWeek day, LocalTime time) {
         //String dayAbbreviation = TimeSlot.getDayStringFromEnum(day);
 
         //for (TimeSlot slot : course.getTimeSlot()) {
