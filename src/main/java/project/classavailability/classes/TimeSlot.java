@@ -75,4 +75,9 @@ public class TimeSlot {
     public static void main(String[] args) {
         parseDays("MWF");
     }
+
+    @Override
+    public String toString() {
+        return daysString + " " + startTime.toString() + " - " + endTime.toString();
+    }
 }
