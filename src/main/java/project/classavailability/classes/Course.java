@@ -1,7 +1,10 @@
 package project.classavailability.classes;
 
 
+import java.util.HashSet;
+
 public class Course {
+    private static final HashSet<Integer> courseNumbers = new HashSet<>();
     private String courseCode; // String containing the course major code, class code, and section concatenated
     private String building;
     private String room;
@@ -17,6 +20,7 @@ public class Course {
      * @param timeSlot      TimeSlot object representing date, time together
      */
     public Course(String _courseCode, String _building, String _room, int _courseNumber, TimeSlot timeSlot) {
+        if (!courseNumbers.add(_courseNumber)) throw new IllegalArgumentException("Duplicate course number");
         this.courseCode = _courseCode;
         this.building = _building;
         this.room = _room;
@@ -32,6 +36,7 @@ public class Course {
      * @param _courseNumber Unique identifier for the course
      */
     public Course(String _courseCode, String _building, String _room, int _courseNumber) {
+        if (!courseNumbers.add(_courseNumber)) throw new IllegalArgumentException("Duplicate course numbers");
         this.courseCode = _courseCode;
         this.building = _building;
         this.room = _room;
@@ -39,6 +44,7 @@ public class Course {
         this.courseNumber = _courseNumber;
     }
 
+    @Deprecated
     public Course(String _courseCode, String _building, String _room, TimeSlot _timeSlots) {
         this.courseCode = _courseCode;
         this.building = _building;
@@ -77,5 +83,11 @@ public class Course {
     @Override
     public String toString(){
         return Integer.toString(this.courseNumber);
+    }
+
+    public static void main(String[] args) {
+        Course c1 = new Course("", "", "", 1);
+        Course c2 = new Course("", "", "", 2);
+        Course c3 = new Course("", "", "", 3);
     }
 }

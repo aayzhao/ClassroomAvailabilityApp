@@ -64,7 +64,7 @@ public class TextParse {
                     sb = new StringBuilder(); // clear the stringbuilder
 
                     courseNumber = Integer.parseInt(scan.next());
-                    if (!Main.classCodes.add(courseNumber)) throw new IllegalArgumentException("Repeat class identifier found!");
+                    // if (!Main.classCodes.add(courseNumber)) throw new IllegalArgumentException("Repeat class identifier found!"); // unneeded
                     if (DEBUG_MODE) System.out.println(courseNumber);
 
                     while (scan.hasNext() && !scan.hasNext(buildingPattern) && !scan.hasNext(endOfSectionPattern)) {
