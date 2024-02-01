@@ -15,6 +15,9 @@ public class Room {
     private String roomNumber;
     private List<Course> schedule;
 
+    private String buildingRoom; // concatenation of building and room number
+
+    // TODO: add more input validation, i.e. check for null and throw illegalargument exception
     /**
      * 2 arg constructor for room. Initializes room to
      * @param building      Name of the building the room  is located in
@@ -25,8 +28,10 @@ public class Room {
         this.building = building;
         this.roomNumber = roomNumber;
         schedule = new ArrayList<>();
+        buildingRoom = building + " Rm " + roomNumber;
     }
 
+    // TODO: add more input validation, i.e. check for null and throw illegalargument exception
     /**
      * 3 arg constructor for a room
      * @param building      Name of the building room is located in
@@ -38,6 +43,7 @@ public class Room {
         this.schedule = schedule;
         this.building = building;
         this.roomNumber = roomNumber;
+        buildingRoom = building + " Rm " + roomNumber;
     }
 
     /**
@@ -56,8 +62,22 @@ public class Room {
         return false;
     }
 
+    // TODO: implement check for time conflicts
+    /**
+     * Attempts to add a course to this room's schedule.
+     * @param course    Course object to be added
+     * @return          Returns false if it failed, else returns true
+     */
+    public boolean addCourse(Course course) {
+        if (schedule.contains(course)) return false;
+        else {
+            schedule.add(course);
+            return true;
+        }
+    }
+
     @Override
     public String toString() {
-        return building + " Rm " + roomNumber;
+        return buildingRoom;
     }
 }

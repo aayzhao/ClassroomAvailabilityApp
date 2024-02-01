@@ -11,6 +11,7 @@ public class TimeSlot {
     private final LocalTime endTime;
     private final List<DayOfWeek> days;
 
+    // TODO: add input validation, i.e. check for null and throw illegalargument exception
     public TimeSlot(String _daysString, LocalTime _startTime, LocalTime _endTime) {
         this.daysString = _daysString;
         this.startTime = _startTime;
@@ -45,6 +46,7 @@ public class TimeSlot {
         return enumDays;
     }
 
+    // TODO: add input validation, i.e. check for null and throw illegalargument exception
     public static String getDayStringFromEnum(DayOfWeek day) {
         switch (day) {
             case SUNDAY: return "Su";
@@ -58,6 +60,7 @@ public class TimeSlot {
         }
     }
 
+    // TODO: add input validation, i.e. check for null and throw illegalargument exception
     public static DayOfWeek getEnumFromDayString(String day) {
         switch (day) {
             case "Su": return DayOfWeek.SUNDAY;

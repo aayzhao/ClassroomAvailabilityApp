@@ -10,7 +10,9 @@ public class Course {
     private String room;
     private int courseNumber; // unique course identifier number
     private TimeSlot timeSlot;
+    private String buildingRoom; // concatenation of building name and room
 
+    // TODO: add input validation, i.e. check for null and throw illegalargument exception
     /**
      * Constructor requiring all private field arguments
      * @param _courseCode   Course code composed of course major code and class + section number
@@ -26,8 +28,10 @@ public class Course {
         this.room = _room;
         this.timeSlot = timeSlot;
         this.courseNumber = _courseNumber;
+        this.buildingRoom = _building + " Rm " + _room;
     }
 
+    // TODO: add input validation, i.e. check for null and throw illegalargument exception
     /**
      * Constructor that does not require a timeslot, and instead a course identifier number
      * @param _courseCode   Course code composed of course major code and class + section number
@@ -42,6 +46,7 @@ public class Course {
         this.room = _room;
         this.timeSlot = null;
         this.courseNumber = _courseNumber;
+        this.buildingRoom = _building + " Rm " + _room;
     }
 
     @Deprecated
@@ -71,6 +76,14 @@ public class Course {
      */
     public TimeSlot getTimeSlot(){
         return timeSlot;
+    }
+
+    /**
+     * Returns the concatenated string of building name and room
+     * @return  String representing the building and room the class is held in.
+     */
+    public String getLocation() {
+        return buildingRoom;
     }
 
     @Override
