@@ -1,16 +1,14 @@
 package project.classavailability.classroomapp;
-import project.classavailability.classes.ClassroomScheduleManager;
-import project.classavailability.classes.Course;
-import project.classavailability.parsing.ListCleaner;
-import project.classavailability.parsing.PDFToText;
-import project.classavailability.parsing.ResourceLoader;
-import project.classavailability.parsing.TextParse;
+import project.classavailability.classes.*;
+import project.classavailability.parsing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -53,6 +51,33 @@ public class Main {
         System.out.println(listOfCourses.size());
         cleaner.removeTBA(listOfCourses);
         System.out.println(listOfCourses.size());
+
+        // create hashmap of rooms
+        HashMap<String, Room> map = new HashMap<>();
+        for (Course course : listOfCourses) {
+            if (map.containsKey(course.getLocation())) {
+                map.get(course.getLocation()).addCourse(course);
+            } else {
+                Room newRoom = new Room(course.getBuilding(), course.getRoom());
+                newRoom.addCourse(course);
+                map.put(course.getLocation(), newRoom);
+            }
+        }
+
+        // rudimentary testing of created hashmap
+        System.out.println(map.size());
+        String[] arr = new String[map.size()];
+        int i = 0;
+        for (String rm : map.keySet()) {
+            // System.out.println(rm);
+            arr[i++] = rm;
+        }
+
+        System.out.println("\n\n\n\nSorted list: ");
+        Arrays.sort(arr);
+        for (String rm : arr) {
+            System.out.println(rm);
+        }
 
     }
 
